@@ -10,6 +10,7 @@ test_venv/
 
 
 ./blog/migrations/
+./user_profile/migrations
 
 # User-specific stuff:
 .idea/**/workspace.xml
