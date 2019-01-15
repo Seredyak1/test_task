@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Post(models.Model):
-    """Main model of app. Related with user, and user is required parameter"""
+
     class Meta:
         verbose_name_plural = 'Posts'
         ordering = ('-updated',)
@@ -19,7 +19,7 @@ class Post(models.Model):
 
     @property
     def like_count(self):
-        """Get number of likes for Post"""
+        """Show the number of likes in the Post"""
         return self.like_set.count()
 
     def add_like(self, user):
@@ -32,7 +32,7 @@ class Post(models.Model):
 
 
 class Like(models.Model):
-    """Related with user and Post"""
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

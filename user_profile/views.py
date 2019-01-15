@@ -9,8 +9,14 @@ from .serializers import RegistrationSerializer, UserSerializer
 
 
 class RegistrationsAPIView(generics.ListCreateAPIView):
-    """Get POST method to create user.
-    Allow any user (authenticated or not) to hit this endpoint."""
+    """
+    get:
+    Return a list of all the existing users.
+
+    post:
+    Create a new user instance.
+    """
+
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
     queryset = User.objects.all()
@@ -25,8 +31,16 @@ class RegistrationsAPIView(generics.ListCreateAPIView):
 
 
 class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    """Show detail about user by his id.
-    GET for all authenticated user, PUT and DELETE just for owner of account."""
+    """
+    get:
+    Return a user detail
+
+    put:
+    Update or patch info about user
+
+    delete:
+    Delete user instance.
+    """
     permission_classes = (permissions.IsAuthenticated, IsOwner)
     serializer_class = UserSerializer
     queryset = User.objects.all()

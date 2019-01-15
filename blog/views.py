@@ -9,9 +9,22 @@ from .serializers import PostSerializer
 
 
 class PostAPIView(ModelViewSet):
-    """Main view. Show API for Post, Post Detail (by post.id), set like and unlike for post.
-    Method POST and GET (post detail by id and list of posts) for all authenticated users,
-    PUT and DELETE -> just for owners if Posts"""
+    """
+    list:
+    Return a list of all posts
+
+    create:
+    Create a new post. Instanse - user
+
+    retrieve (with post.id):
+    Return the given post
+
+    put (with post.id):
+    Update or patch given post. Available for Post owner
+
+    delete(with post.id):
+    Delete post. Available for Post owner
+    """
     permission_classes = (permissions.IsAuthenticated, IsPostOwner,)
     serializer_class = PostSerializer
     queryset = Post.objects.all()
@@ -21,14 +34,20 @@ class PostAPIView(ModelViewSet):
 
     @action(detail=True, methods=['POST'], permission_classes=[permissions.IsAuthenticated])
     def like(self, request, *args, **kwargs):
-        """url: '/posts/post_id/like; set like for post"""
+        """
+        post:
+        Set like to Post from auth user
+        """
         obj = self.get_object()
         obj.add_like(request.user)
         return Response(status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['DELETE'], permission_classes=[permissions.IsAuthenticated])
     def unlike(self, request, *args, **kwargs):
-        """url: '/posts/post_id/unlike; delete like for post"""
+        """
+        delete:
+        Delete like to Post from auth user
+        """
         obj = self.get_object()
         obj.unlike(request.user)
         return Response(status=status.HTTP_204_NO_CONTENT)

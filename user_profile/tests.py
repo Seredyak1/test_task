@@ -42,6 +42,40 @@ class TestUserApi(APITestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.data))
 
+#test user login with JWT token
+    def test_user_login_with_right_data(self):
+        """Assert a 200 status code was returned. Also token was returned"""
+        self.test_user_registration()
+        login_data = {"username": "test_user", "password": "test1234"}
+
+        response = self.client.post('/api-token-auth/', data=login_data)
+
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(True, 'token' in response.data.keys())
+
+    def test_user_login_with_wrong_data(self):
+        """Assert a 400 status code and data without token was returned."""
+        self.test_user_registration()
+        login_data = {"username": "test_use", "password": "1234"}
+
+        response = self.client.post('/api-token-auth/', data=login_data)
+
+        self.assertEqual(400, response.status_code)
+        self.assertEqual(False, 'token' in response.data.keys())
+
+#test reshresh token for auth
+    def test_refresh_token_by_auth_user(self):
+        """200"""
+        self.test_user_registration()
+        login_data = {"username": "test_user", "password": "test1234"}
+
+        get_token = self.client.post('/api-token-auth/', data=login_data)
+        token = get_token.data['token']
+
+        response = self.client.post('/api-token-refresh/', data={'token': token})
+
+        self.assertEqual(200, response.status_code)
+
 # get user detail if authorized or unauthorized
     def test_get_user_by_id_if_authorized(self):
         """Assert a 201 status code was returned"""
