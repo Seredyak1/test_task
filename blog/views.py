@@ -16,13 +16,13 @@ class PostAPIView(ModelViewSet):
     create:
     Create a new post. Instanse - user
 
-    retrieve (with post.id):
+    retrieve:
     Return the given post
 
-    put (with post.id):
+    put:
     Update or patch given post. Available for Post owner
 
-    delete(with post.id):
+    delete:
     Delete post. Available for Post owner
     """
     permission_classes = (permissions.IsAuthenticated, IsPostOwner,)
