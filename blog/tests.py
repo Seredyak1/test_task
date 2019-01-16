@@ -169,7 +169,6 @@ class TestPostApi(APITestCase):
 
         self.assertEqual(403, response.status_code)
 
-
     def test_delete_post_if_user_is_not_owner(self):
         """Assert 403 status code" was returned"""
         self.test_create_post_if_authorized()
