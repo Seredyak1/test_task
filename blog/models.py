@@ -6,7 +6,7 @@ class Post(models.Model):
 
     class Meta:
         verbose_name_plural = 'Posts'
-        ordering = ('-updated',)
+        ordering = ('-updated_at',)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=128, blank=True, null=True)
