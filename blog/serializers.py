@@ -4,8 +4,7 @@ from blog.models import Post
 
 
 class PostSerializer(serializers.ModelSerializer):
-    """Serializer for Post.
-    Set like_count field to default value = 0"""
+    """Serializer for Post"""
     like_count = serializers.IntegerField(read_only=True)
 
     class Meta:
